@@ -11,5 +11,5 @@ log.basicConfig(level=log.DEBUG,
                 ])
 
 # Obtener el logger
-log = logging.getLogger(__name__)
+log = log.getLogger(__name__)
 

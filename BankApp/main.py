@@ -66,16 +66,19 @@ def registro():
     loader(3)
     os.system("cls")
     try:
+        #Creamos y guardamos en la base de datos
         cliente = Client(name, address, phone, bank_id)
-        cuenta = Account(0.0, cliente.id, bank_id)
-        
-        # Guardamos en la base de datos
         cliente.save()
+
+        cuenta = Account(0.0, cliente.id, bank_id)
         cuenta.save()
+
+        # Mensaje de exito
         print('\t\t ¡Su cuenta se ha creado con éxito!\n\n')
         print(f'Su número de cuenta: {cuenta.account_number}')
     except:
         print('Error al crear cuenta. Contacte a su banco')
+        
 
 
             

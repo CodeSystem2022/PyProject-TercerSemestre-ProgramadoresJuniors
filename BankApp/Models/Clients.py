@@ -20,6 +20,8 @@ class Client:
                 "INSERT INTO clients (name, address, phone, bank_id) VALUES (%s, %s, %s, %s) RETURNING id",
                 (self.name, self.address, self.phone, self.bank_id),
             )
+            
+            #print(cur.fetchone()[0])
             self.id = cur.fetchone()[0]
         else:
             # Actualizar un cliente existente
@@ -70,7 +72,23 @@ class Client:
         return clients
 
 
+    @staticmethod
+    def get_by_address_name(address, name):
+        conn = connect()
+        cur = conn.cursor()
 
+        cur.execute("SELECT * FROM clients WHERE address = %s AND name = %s", (address, name))
+        row = cur.fetchone()
+
+        disconnect(conn)
+
+        if row:
+            client_id, name, address, phone, bank_id = row
+            client = Client(name, address, phone, bank_id)
+            client.id = client_id
+            return client
+
+        return None
 
 
 

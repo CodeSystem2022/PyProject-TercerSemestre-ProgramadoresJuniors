@@ -20,6 +20,7 @@ class Account:
             cur = conn.cursor()
 
             if self.id is None:
+                #print(self.client_id)
                 # Insertar una nueva cuenta y obtener el ID generado
                 cur.execute("INSERT INTO accounts (balance, client_id, bank_id, account_number) VALUES (%s,%s,%s,%s) RETURNING id", (self.balance, self.client_id, self.bank_id, self.account_number))
                 self.id = cur.fetchone()[0]

@@ -7,7 +7,7 @@ class Bank:
         self.network_type_id = network_type_id
 
         # Guardar la instancia automáticamente
-        self.save()
+        #self.save()
 
     def save(self):
         conn = connect()
@@ -33,7 +33,7 @@ class Bank:
         disconnect(conn)
 
         banks = []
-        print(rows)
+        #print(rows)
         for row in rows:
             bank_id, name, network = row
             bank = Bank(name, network)
@@ -41,3 +41,21 @@ class Bank:
             banks.append(bank)
 
         return banks
+    
+    @staticmethod
+    def get_by_id(bank_id):
+        conn = connect()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM banks WHERE id = %s", (bank_id,))
+        row = cur.fetchone()
+
+        disconnect(conn)
+
+        if row:
+            bank_id, name, network_type_id = row
+            bank = Bank(name, network_type_id)
+            bank.id = bank_id
+            return bank
+
+        return None

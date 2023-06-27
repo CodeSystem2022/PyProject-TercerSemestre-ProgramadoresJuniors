@@ -23,7 +23,7 @@ Esto creará un entorno virtual que luego activará con el siguiente comando:
 env\scripts\activate
 ```
 
-Luego instale las dependencias del proyecto con el siguiente comando:
+Luego instale las dependencias del proyecto con lo siguiente:
 
 ```python
 pip install -r requirements.txt

@@ -14,46 +14,58 @@ class Account:
 
     # Método para guardar la cuenta creada en la base de datos  y crear ID
     def save(self):
-        conn = connect()
-        cur = conn.cursor()
+        try:
+            conn = connect()
+            cur = conn.cursor()
 
-        if self.id is None:
-            # Insertar una nueva cuenta y obtener el ID generado
-            cur.execute("INSERT INTO accounts (balance, client_id, bank_id, account_number) VALUES (%s,%s,%s,%s) RETURNING id", (self.balance, self.client_id, self.bank_id, self.account_number))
-            self.id = cur.fetchone()[0]
-        else:
-            # Si el ID existe entonces solo le cambia el balance
-            cur.execute("UPDATE accounts SET (balance, client_id, bank_id, account_number) = (%s,%s,%s,%s) WHERE id = %s", (self.balance, self.client_id, self.bank_id, self.account_number, self.id))
+            if self.id is None:
+                # Insertar una nueva cuenta y obtener el ID generado
+                cur.execute("INSERT INTO accounts (balance, client_id, bank_id, account_number) VALUES (%s,%s,%s,%s) RETURNING id", (self.balance, self.client_id, self.bank_id, self.account_number))
+                self.id = cur.fetchone()[0]
+            else:
+                # Si el ID existe entonces solo le cambia el balance
+                cur.execute("UPDATE accounts SET (balance, client_id, bank_id, account_number) = (%s,%s,%s,%s) WHERE id = %s", (self.balance, self.client_id, self.bank_id, self.account_number, self.id))
 
-        conn.commit()
-        disconnect(conn)
+            conn.commit()
+        except Exception as e:
+                log.error(e)
+        finally:
+            disconnect(conn)
 
     # Método para traer todas las cuentas
     @staticmethod
     def get_all():
-        conn = connect()
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM accounts")
-        rows = cur.fetchall()
-        disconnect(conn)
+        try:
+            conn = connect()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM accounts")
+            rows = cur.fetchall()
+        except Exception as e:
+             log.error(e)
+        finally:
+            disconnect(conn)
+            
 
-        accounts = []
-        for row in rows:
-            account_id, balance = row
-            account = Account(balance)
-            account.id = account_id
-            accounts.append(account)
-        return accounts
+            accounts = []
+            for row in rows:
+                account_id, balance = row
+                account = Account(balance)
+                account.id = account_id
+                accounts.append(account)
+            return accounts
     
     @staticmethod
     def get_by_id(account_id):
-        conn = connect()
-        cur = conn.cursor()
+        try:
+            conn = connect()
+            cur = conn.cursor()
 
-        cur.execute("SELECT * FROM accounts WHERE id = %s", (account_id,))
-        row = cur.fetchone()
-
-        disconnect(conn)
+            cur.execute("SELECT * FROM accounts WHERE id = %s", (account_id,))
+            row = cur.fetchone()
+        except Exception as e:
+                log.error(e)
+        finally:
+            disconnect(conn)
 
         if row:
             account_id, client_id, account_number, balance, bank_id = row

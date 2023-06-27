@@ -14,7 +14,13 @@ Decidimos hacer el proyecto que habíamos hecho para Java en el 2do semestre, lo
 Para ver los resultados puede bajar el repositorio en su pc y ejecutar lo siguiente:
 
 ```python
-python -m virtualenv venv
+python -m virtualenv env
+```
+
+Esto creará un entorno virtual que luego activará con el siguiente comando:
+
+```python
+env\scripts\activate
 ```
 
 Luego instale las dependencias del proyecto con el siguiente comando:

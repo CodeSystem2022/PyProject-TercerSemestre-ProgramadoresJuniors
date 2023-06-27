@@ -2,12 +2,15 @@
 
 import psycopg2
 import random
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 conn = psycopg2.connect(
     database="BankApp",
     user="postgres",
-    password="boombang123",
+    password=os.getenv('PASSWORD_DB'),
     host="127.0.0.1",
     port="5432",
 )

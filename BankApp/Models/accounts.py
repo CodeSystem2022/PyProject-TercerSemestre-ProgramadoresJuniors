@@ -1,4 +1,5 @@
 from .postgres import connect, disconnect
+from .logging.logger_base import log
 import random
 
 
@@ -69,7 +70,7 @@ class Account:
 
         if row:
             account_id, client_id, account_number, balance, bank_id = row
-            account = Account(client_id, account_number, balance, bank_id)
+            account = Account(float(balance), client_id, bank_id, account_number)
             account.id = account_id
             return account
         return None

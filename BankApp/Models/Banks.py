@@ -1,10 +1,10 @@
-import psycopg2
 from .postgres import connect, disconnect
 
 class Bank:
-    def __init__(self, name):
+    def __init__(self, name, network_type_id):
         self.id = None  # ID generado automáticamente por la base de datos
         self.name = name
+        self.network_type_id = network_type_id
 
         # Guardar la instancia automáticamente
         self.save()
@@ -15,7 +15,7 @@ class Bank:
 
         if self.id is None:
             # Insertar un nuevo banco y obtener el ID generado
-            cur.execute("INSERT INTO banks (name) VALUES (%s) RETURNING id", (self.name,))
+            cur.execute("INSERT INTO banks (name, network_type_id) VALUES (%s) RETURNING id", (self.name,))
             self.id = cur.fetchone()[0]
         else:
             # Actualizar un banco existente

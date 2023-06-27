@@ -15,7 +15,7 @@ class Bank:
 
         if self.id is None:
             # Insertar un nuevo banco y obtener el ID generado
-            cur.execute("INSERT INTO banks (name, network_type_id) VALUES (%s) RETURNING id", (self.name,))
+            cur.execute("INSERT INTO banks (name, network_type_id) VALUES (%s, %s) RETURNING id", (self.name, self.network_type_id))
             self.id = cur.fetchone()[0]
         else:
             # Actualizar un banco existente
@@ -33,9 +33,10 @@ class Bank:
         disconnect(conn)
 
         banks = []
+        print(rows)
         for row in rows:
-            bank_id, name = row
-            bank = Bank(name)
+            bank_id, name, network = row
+            bank = Bank(name, network)
             bank.id = bank_id
             banks.append(bank)
 

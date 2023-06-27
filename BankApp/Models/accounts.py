@@ -3,12 +3,12 @@ import random
 
 
 class Account:
-    def __init__(self, balance, client_id, bank_id):
+    def __init__(self, balance, client_id, bank_id, account_number=None):
         self.id = None  # ID generado automáticamente por la base de datos
         self.client_id = client_id
         self.balance = balance
         self.bank_id = bank_id
-        self.account_number = random.randrange(10000, 100000)
+        self.account_number = account_number or random.randint(10000, 99999)
         # Guardar el objeto en la base de datos
         #self.save()
 
@@ -19,11 +19,11 @@ class Account:
 
         if self.id is None:
             # Insertar una nueva cuenta y obtener el ID generado
-            cur.execute("INSERT INTO accounts (balance) VALUES (%s) RETURNING id", (self.balance,))
+            cur.execute("INSERT INTO accounts (balance, client_id, bank_id, account_number) VALUES (%s,%s,%s,%s) RETURNING id", (self.balance, self.client_id, self.bank_id, self.account_number))
             self.id = cur.fetchone()[0]
         else:
             # Si el ID existe entonces solo le cambia el balance
-            cur.execute("UPDATE accounts SET balance = %s WHERE id = %s", (self.balance, self.id))
+            cur.execute("UPDATE accounts SET (balance, client_id, bank_id, account_number) = (%s,%s,%s,%s) WHERE id = %s", (self.balance, self.client_id, self.bank_id, self.account_number, self.id))
 
         conn.commit()
         disconnect(conn)

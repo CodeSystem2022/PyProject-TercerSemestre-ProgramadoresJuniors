@@ -28,7 +28,7 @@ env\scripts\activate
 Luego instale las dependencias del proyecto con lo siguiente:
 
 ```python
-pip install -r requirements.txt
+pip install -r requirements.txt 
 ```
 <br/>
 <br/>

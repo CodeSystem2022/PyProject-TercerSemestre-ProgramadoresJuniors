@@ -22,13 +22,16 @@ def transaction(codigo, transaction_type):
 
 
     # Una vez pasada la autenticación pasamos a realizar el depósito
-    os.system("cls") # limpia la consola
-    print('\t\t** Ingrese monto a depositar **\n')
-    ammount = input('')
-    loader(2)
+    while True:
+        os.system("cls") # limpia la consola
+        print('\t\t** Ingrese monto **\n')
+        ammount = input('')
+        loader(2)
+        if ammount >= 0:
+            break
+   
+   
     # Obteniendo datos necesarios para transacción
-
-
     # ID
     client_id = account.client_id
     account_id = account.id
@@ -36,7 +39,6 @@ def transaction(codigo, transaction_type):
     # Banco
     bank_id = account.bank_id
     bank_from_account = Bank.get_by_id(bank_id)
-    print(bank_from_account.id)
     transaction_network_id = bank_from_account.network_type_id
 
     # Transacción

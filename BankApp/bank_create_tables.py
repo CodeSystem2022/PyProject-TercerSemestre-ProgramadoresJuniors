@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-
 import psycopg2
-import random
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 conn = psycopg2.connect(
     database="BankApp",
     user="postgres",
-    password="554585",
+    password=os.getenv('PASSWORD_DB'),
     host="127.0.0.1",
     port="5432",
 )
@@ -236,35 +237,6 @@ for bank_name in banelco_banks:
     )
 
 
-# first client
-cursor.execute(
-    """
-    INSERT INTO clients (id, name, address, phone, bank_id)
-    VALUES (1, 'Soel', 'El Moro 315', '2604306032', 5)
-    """
-)
-
-# first account
-account_number = str(random.randint(1000000000, 9999999999))  # random account number
-cursor.execute(
-    """
-    INSERT INTO accounts (id, client_id, account_number, balance, bank_id)
-    VALUES (1, 1, '{}', 100000.00, 5)
-    """.format(
-        account_number
-    )
-)
-
-# now we gonna do our first transaction and then we gonna show the final table result
-transaction_id = random.randint(1, 1000)  # random transaction id
-cursor.execute(
-    """
-    INSERT INTO transactions (id, client_id, account_id, transactions_network_id, bank_id, amount, date, type)
-    VALUES ({}, 1, 1, 1, 5, 1500.00, NOW(), 'extraction')
-    """.format(
-        transaction_id
-    )
-)
 
 conn.commit()
 conn.close()

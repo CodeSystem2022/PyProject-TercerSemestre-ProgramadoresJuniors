@@ -1,4 +1,5 @@
-from bank.registro import registro, loader
+from bank.registro import registro
+from bank.transaction import transaction
 import os
 
 def show_menu(codigo):
@@ -13,9 +14,6 @@ def show_menu(codigo):
     print("***************************")
 
 
-def deposito():
-    pass
-
 
 # Variables auxiliares
 codigo = None
@@ -29,11 +27,11 @@ while True:
 
     if option == "1":
         # Lógica para realizar depósito
-        deposito()
-        pass
+        codigo = transaction(codigo, 'deposit')
+
     elif option == "2":
         # Lógica para realizar retiro
-        pass
+        codigo = transaction(codigo, 'withdraw')
     elif option == "3":
         # Lógica para realizar transferencia
         pass

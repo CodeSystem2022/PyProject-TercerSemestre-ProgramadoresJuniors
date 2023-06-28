@@ -76,4 +76,23 @@ class Account:
             return account
         return None
     
-    
+    @staticmethod
+    def get_by_account_number(account_number):
+        try:
+            conn = connect()
+            cur = conn.cursor()
+
+            cur.execute("SELECT * FROM accounts WHERE account_number = %s", (str(account_number),))
+            row = cur.fetchone()
+        except Exception as e:
+            log.error(e)
+        finally:
+            disconnect(conn)
+
+        if row:
+            account_id, client_id, account_number, balance, bank_id  = row
+            account = Account(float(balance), client_id, bank_id, account_number)
+            account.id = account_id
+            return account
+        return None
+        

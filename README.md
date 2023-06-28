@@ -28,3 +28,11 @@ Luego instale las dependencias del proyecto con lo siguiente:
 ```python
 pip install -r requirements.txt
 ```
+
+Una vez configurado el entorno cree una base de datos postgres (recomendamos llamarla BankApp) y ponga el nombre en el archivo postgres.py de la carpeta BankApp.
+
+Luevo cree un archivo .env en la raiz del proyecto para poner las credenciales como contraseña postgres. Dentro del archivo ponga la contraseña del usuario postgres de la siguiente forma:
+
+```
+PASSWORD_DB='YOUR_SECRET_PASSWORD'
+```

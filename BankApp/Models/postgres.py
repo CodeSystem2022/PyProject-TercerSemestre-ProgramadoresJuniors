@@ -17,7 +17,7 @@ def connect():
         )
         return conn
     except (Exception, psycopg2.Error) as error:
-        log.error("Error al conectarse a la base de datos:", error)
+        log.error("Error al conectarse a la base de datos: ", error)
 
 
 def disconnect(conn):

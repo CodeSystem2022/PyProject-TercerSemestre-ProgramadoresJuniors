@@ -15,7 +15,7 @@ def transfer_account_to_account(codigo):
     else:
         # Inicio de sesión con codigo de usuario
         while True:
-            codigo = input("ingrese su codigo de usuario: ")
+            codigo = input("Ingrese su codigo de usuario: ")
             os.system("cls")  # limpia la consola
             account = Account.get_by_account_number(codigo)
             if account is not None:

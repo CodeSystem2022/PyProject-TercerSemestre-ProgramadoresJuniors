@@ -237,6 +237,5 @@ for bank_name in banelco_banks:
     )
 
 
-
 conn.commit()
 conn.close()

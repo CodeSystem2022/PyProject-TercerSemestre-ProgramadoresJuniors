@@ -16,7 +16,6 @@ while True:
     if option == "1":
         # Lógica para realizar depósito
         codigo = transaction(codigo, "deposit")
-
     elif option == "2":
         # Lógica para realizar retiro
         codigo = transaction(codigo, "withdraw")
@@ -26,7 +25,6 @@ while True:
     elif option == "4":
         # Lógica para realizar registro
         codigo = registro()
-
     elif option == "5":
         # Lógica para despedirse o.O
         despedida()
